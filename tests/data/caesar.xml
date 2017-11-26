@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<unit_test>
+    <crypt_class>caesar</crypt_class>
+    <clear_text>
+        THESTORYOFATEAMOFAFRICANAMERICANWOMENMATHEMATICIANSWHOSERVEDAVITALROLEINNASADURINGTHEEARLYYEARSOFTHESPACEPROGRAM
+    </clear_text>
+    <password>R</password>
+    <encrypted_text>
+        CQNBCXAHXOJCNJVXOJOARLJWJVNARLJWFXVNWVJCQNVJCRLRJWBFQXBNAENMJERCJUAXUNRWWJBJMDARWPCQNNJAUHHNJABXOCQNBYJLNYAXPAJV
+    </encrypted_text>
+    <key_word>STORY</key_word>
+</unit_test>
