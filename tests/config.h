@@ -1,0 +1,6 @@
+#ifndef CRYPT_CONFIG_H_O2IN9HN94N932494H
+#define CRYPT_CONFIG_H_O2IN9HN94N932494H
+
+#define ABSOLUTE_CODE_PATH "/mnt/c/Users/Pablo/repos/crypt/tests/data/"
+
+#endif //CRYPT_CONFIG_H_O2IN9HN94N932494H

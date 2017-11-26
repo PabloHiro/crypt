@@ -1,12 +1,12 @@
-#include "../cesar.hpp"
+#include "../include/caesar.hpp"
 
-crypt::caesar::std::string lock(const std::string &text, const std::string &password)
+std::string crypt::caesar::lock(const std::string &text, const std::string &password)
 {
-    if ( valid(text) && valid(password) && (password.size == 1) )
+    if ( valid(text) && valid(password) && (password.size() == 1) )
     {
         std::string ans;
-        std::string ans.resize( text.size() );
-        int c = static_cast<int>(password[0]);
+        ans.resize( text.size() );
+        int c = static_cast<int>(password[0] - 'A');
         for ( size_t i = 0; i < ans.size(); ++i )
         {
             int curr = static_cast<int>(text[i] - 'A');
@@ -20,13 +20,13 @@ crypt::caesar::std::string lock(const std::string &text, const std::string &pass
     return text;
 }
 
-crypt::caesar::std::string unlock(const std::string &text, const std::string &password)
+std::string crypt::caesar::unlock(const std::string &text, const std::string &password)
 {
-    if ( valid(text) && valid(password) && (password.size == 1) )
+    if ( valid(text) && valid(password) && (password.size() == 1) )
     {
         std::string ans;
-        std::string ans.resize( text.size() );
-        int c = static_cast<int>(password[0]);
+        ans.resize( text.size() );
+        int c = static_cast<int>(password[0] - 'A');
         for ( size_t i = 0; i < ans.size(); ++i )
         {
             int curr = static_cast<int>(text[i] - 'A');
@@ -40,24 +40,24 @@ crypt::caesar::std::string unlock(const std::string &text, const std::string &pa
     return text;
 }
 
-crypt::caesar::std::string solve(const std::string &text, const std::string &keyword)
+std::string  crypt::caesar::solve(const std::string &text, const std::string &keyword)
 {
     if ( valid(text) && valid(keyword) && min_size(keyword, 5) )
     {
         std::string ans(text);
-        for ( char c = 'A'; c <= 'Z'; ++c )
+        for ( int c = 0; c < 26; ++c )
         {
             for( size_t i = 0; i < text.size(); ++i )
             {
                 int curr = static_cast<int>(text[i] - 'A');
-                curr += static_cast<int>(c);
-                curr %= 26;
+                curr -= c;
+                curr = (curr < 0) ? curr+26 : curr%26;
                 ans[i] = 'A' + static_cast<char>(curr);
             }
             
-            if ( ans.find ( key_word ) != std::string::npos )
+            if ( ans.find ( keyword ) != std::string::npos )
             {
-               LOG_ERR("CAESAR. The password is "<< 'Z' - c + 'A' << std::endl);
+               LOG_ERR("CAESAR. The password is "<< static_cast<char>(c + 'A') << std::endl);
                return ans;
             }
         }

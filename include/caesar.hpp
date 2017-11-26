@@ -1,6 +1,8 @@
 #ifndef CAESAR_CRYPT_23JN9ON2FO2N3J0J09JI
 #define CAESAR_CRYPT_23JN9ON2FO2N3J0J09JI
 
+#include <string>
+
 #include "base_crypt.hpp"
 
 namespace crypt
@@ -8,9 +10,6 @@ namespace crypt
     class caesar : public base_crypt
     {
         public:
-        
-        caesar();
-        ~caesar(){};
         
         std::string lock    (const std::string &text, const std::string &password) override;
         

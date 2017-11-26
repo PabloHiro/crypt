@@ -1,34 +1,35 @@
 cmake_minimum_required (VERSION 2.8.12 FATAL_ERROR)
 
-project(crypt VERSION 0.1 LANGUAGES CXX)
+project(crypt CXX)
 
+enable_language(C CXX)
+enable_testing()
 
 # Must use GNUInstallDirs to install libraries into correct
 # locations on all platforms.
 #include(GNUInstallDirs)
 
-enable_testing()
 add_subdirectory(tests)
 
-add_library(crypt
+add_library(crypt STATIC
     src/base_crypt.cpp
     src/caesar.cpp
 )
 
-target_include_directories(crypt PRIVATE #PUBLIC if installation of the libray is needed
+target_include_directories(crypt PUBLIC
     $<INSTALL_INTERFACE:include>
     $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
-    PRIVATE src 
+    PRIVATE src
 )
-
 
 # If we have compiler requirements for this library, list them here
-target_compile_features(crypt
-)
+# target_compile_features(crypt
+# )
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -Wall -static-libgcc -static-libstdc++")
 
 # Depend on a library that we defined in the top-level file
-target_link_libraries(crypt
-)
+# target_link_libraries(crypt
+# )
 
 # 'make install' to the correct locations (provided by GNUInstallDirs).
 # install(TARGETS crypt EXPORT crypt_config

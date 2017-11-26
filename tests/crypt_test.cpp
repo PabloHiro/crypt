@@ -2,7 +2,7 @@
 #include <string>
 #include <memory>
 
-#include <crypt.hpp>
+#include "crypt.hpp"
 
 int get_data(const std::string file_name, std::string &crypt_class, std::string &clear_text, std::string &password, std::string &encrypted_text, std::string &keyword); // In custom_xml_parser.cpp
 
@@ -38,7 +38,21 @@ int main ( int argc, char **argv )
     std::cerr << "encrypted_text is: " << encrypted_text << std::endl;
     std::cerr << "keyword is: " << keyword << std::endl;
     
-    unique_ptr<crypt::base_crypt> my_crypt( factory(crypt_class) );
-    crypt::my_crypt->solve(encrypted_text,keyword);
+    std::unique_ptr<crypt::base_crypt> my_crypt( factory(crypt_class) );
+    if( my_crypt->lock(clear_text, password) != encrypted_text )
+    {
+        std::cout << "function lock doesn't work properly" << std::endl;
+        std::cout << my_crypt->lock(clear_text, password) << std::endl;
+    }
+    if( my_crypt->unlock(encrypted_text, password) != clear_text )
+    {
+        std::cout << "function unlock doesn't work properly" << std::endl;
+        std::cout << my_crypt->unlock(encrypted_text, password) << std::endl;
+    }
+    if( my_crypt->solve(encrypted_text,keyword) != clear_text )
+    {
+        std::cout << "function solve doesn't work properly" << std::endl;
+        std::cout << my_crypt->solve(encrypted_text,keyword) << std::endl;
+    }
     return 0;
 }
