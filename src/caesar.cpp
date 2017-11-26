@@ -1,4 +1,4 @@
-#include "cesar.hpp"
+#include "../cesar.hpp"
 
 crypt::caesar::std::string lock(const std::string &text, const std::string &password)
 {
@@ -10,7 +10,7 @@ crypt::caesar::std::string lock(const std::string &text, const std::string &pass
         for ( size_t i = 0; i < ans.size(); ++i )
         {
             int curr = static_cast<int>(text[i] - 'A');
-            curr += static_cast<int>(c);
+            curr += c;
             curr %= 26;
             ans[i] = 'A' + static_cast<char>(curr);
         }
@@ -30,7 +30,7 @@ crypt::caesar::std::string unlock(const std::string &text, const std::string &pa
         for ( size_t i = 0; i < ans.size(); ++i )
         {
             int curr = static_cast<int>(text[i] - 'A');
-            curr -= static_cast<int>(c);
+            curr -= c;
             curr = (curr < 0) ? curr+26 : curr%26;
             ans[i] = 'A' + static_cast<char>(curr);
         }
@@ -42,7 +42,7 @@ crypt::caesar::std::string unlock(const std::string &text, const std::string &pa
 
 crypt::caesar::std::string solve(const std::string &text, const std::string &keyword)
 {
-    if ( valid(text) && valid(keyword) && valid_size(keyword, 5) )
+    if ( valid(text) && valid(keyword) && min_size(keyword, 5) )
     {
         std::string ans(text);
         for ( char c = 'A'; c <= 'Z'; ++c )
