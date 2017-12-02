@@ -5,14 +5,14 @@
 #include <mutex>
 
 #ifndef LOG_VERBOSE
-    #define LOG_ERR(err_txt)
+    #define LOG_ERR(txt)
 #else
     inline std::mutex& err_mutex()
     {
-        static  std::mutex mtx;
+        static std::mutex mtx;
         return mtx;
     }
-    #define LOG_ERR(err_txt) ( err_mutex().lock(), std::cerr << err_txt ), err_mutex().unlock()
+    #define LOG_ERR(txt) ( err_mutex().lock(), std::cerr << txt ), err_mutex().unlock()
 #endif // LOG_VERBOSE
 
 #endif //LOGGING_CRYPT_20939FNF4O94INF

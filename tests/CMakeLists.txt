@@ -7,12 +7,12 @@ configure_file(
   "${PROJECT_SOURCE_DIR}/config.h"
 )
 
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -Wall -static-libgcc -static-libstdc++")
+#set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -Wall -static-libgcc -static-libstdc++")
 
 add_executable(crypt_test crypt_test.cpp custom_xml_parser.cpp)
 target_include_directories(crypt_test PRIVATE ${CMAKE_SOURCE_DIR})
 target_link_libraries(crypt_test crypt)
-
+target_compile_options(crypt_test PRIVATE -std=c++11 -Wall -static-libgcc -static-libstdc++)
 
 #Copy the data test
 add_custom_command(TARGET crypt_test PRE_BUILD
