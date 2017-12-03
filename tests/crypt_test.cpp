@@ -17,7 +17,6 @@ crypt::base_crypt* factory(const std::string crypt_class)
 
 int main ( int argc, char **argv )
 {
-    // 1: crypt_class
     if( argc != 2 )
     {
         std::cerr << "usage: " << argv[0] << " crypt_class.xml" << std::endl;

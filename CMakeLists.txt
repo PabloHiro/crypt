@@ -16,6 +16,10 @@ set( VERBOSE OFF CACHE BOOL "Enable logging" )
 add_library(crypt STATIC
     src/base_crypt.cpp
     src/caesar.cpp
+    src/affine.cpp
+    src/portabellaso.cpp
+    src/transposition.cpp
+    src/vigenere_txt.cpp
 )
 
 target_include_directories(crypt PUBLIC
