@@ -12,6 +12,17 @@ crypt::base_crypt* factory(const std::string crypt_class)
     {
         return new crypt::caesar;
     }
+    
+    if(crypt_class == "affine")
+    {
+        return new crypt::affine;
+    }
+    
+    if(crypt_class == "vigenere_txt")
+    {
+        return new crypt::vigenere_txt;
+    }
+    
     return nullptr;
 }
 
@@ -36,17 +47,18 @@ int main ( int argc, char **argv )
     std::cerr << "password is: " << password << std::endl;
     std::cerr << "encrypted_text is: " << encrypted_text << std::endl;
     std::cerr << "keyword is: " << keyword << std::endl;
+    std::cerr << std::endl;
     
     std::unique_ptr<crypt::base_crypt> my_crypt( factory(crypt_class) );
     if( my_crypt->lock(clear_text, password) != encrypted_text )
     {
         std::cout << "function lock doesn't work properly" << std::endl;
-        std::cout << my_crypt->lock(clear_text, password) << std::endl;
+        //std::cout << my_crypt->lock(clear_text, password) << std::endl;
     }
     if( my_crypt->unlock(encrypted_text, password) != clear_text )
     {
         std::cout << "function unlock doesn't work properly" << std::endl;
-        std::cout << my_crypt->unlock(encrypted_text, password) << std::endl;
+        //std::cout << my_crypt->unlock(encrypted_text, password) << std::endl;
     }
     if( my_crypt->solve(encrypted_text,keyword) != clear_text )
     {
