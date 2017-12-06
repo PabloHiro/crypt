@@ -23,6 +23,11 @@ crypt::base_crypt* factory(const std::string crypt_class)
         return new crypt::vigenere_txt;
     }
     
+    if(crypt_class == "transposition")
+    {
+        return new crypt::transposition;
+    }
+    
     return nullptr;
 }
 
@@ -50,20 +55,32 @@ int main ( int argc, char **argv )
     std::cerr << std::endl;
     
     std::unique_ptr<crypt::base_crypt> my_crypt( factory(crypt_class) );
-    if( my_crypt->lock(clear_text, password) != encrypted_text )
+    
+    std::string curr_encr;
+    std::string curr_clr1;
+    std::string curr_clr2;
+    
+    curr_encr = my_crypt->lock(clear_text, password);
+    curr_clr1 = my_crypt->unlock(encrypted_text, password);
+    curr_clr2 = my_crypt->solve(encrypted_text,keyword);
+    
+    if( curr_encr != encrypted_text )
     {
-        std::cout << "function lock doesn't work properly" << std::endl;
-        //std::cout << my_crypt->lock(clear_text, password) << std::endl;
+        std::cout << "function lock doesn't work properly: " << std::endl;
+        std::cout << "\t output: " << curr_encr << std::endl;
+        std::cout << "\t expected output: " << encrypted_text <<std::endl;
     }
-    if( my_crypt->unlock(encrypted_text, password) != clear_text )
+    if( curr_clr1 != clear_text )
     {
-        std::cout << "function unlock doesn't work properly" << std::endl;
-        //std::cout << my_crypt->unlock(encrypted_text, password) << std::endl;
+        std::cout << "function unlock doesn't work properly: " << std::endl;
+        std::cout << "\t output: " << curr_clr1 << std::endl;
+        std::cout << "\t expected output: " << clear_text << std::endl;
     }
-    if( my_crypt->solve(encrypted_text,keyword) != clear_text )
+    if( curr_clr2 != clear_text )
     {
-        std::cout << "function solve doesn't work properly" << std::endl;
-        std::cout << my_crypt->solve(encrypted_text,keyword) << std::endl;
+        std::cout << "function solve doesn't work properly: " << std::endl;
+        std::cout << "\t output: " << curr_clr2 << std::endl;
+        std::cout << "\t expected output: " << clear_text << std::endl;
     }
     return 0;
 }
