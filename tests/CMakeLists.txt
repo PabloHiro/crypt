@@ -22,5 +22,25 @@ target_compile_options(crypt_test PRIVATE -std=c++11 -Wall -static-libgcc -stati
 #Call tests with make test
 add_test(
     NAME caesar
-    COMMAND crypt_test "${CMAKE_CURRENT_SOURCE_DIR}/data/caesar.xml" > "caesar.log"
+    COMMAND crypt_test caesar.xml 2>> crypt.log
+)
+add_test(
+    NAME affine
+    COMMAND crypt_test affine.xml 2>> crypt.log
+)
+add_test(
+    NAME portabellaso
+    COMMAND crypt_test portabellaso.xml 2>> crypt.log
+)
+add_test(
+    NAME vigenere_txt
+    COMMAND crypt_test vigenere_txt.xml 2>> crypt.log
+)
+add_test(
+    NAME transposition1
+    COMMAND crypt_test transposition1.xml 2>> crypt.log
+)
+add_test(
+    NAME transposition2
+    COMMAND crypt_test transposition2.xml 2>> crypt.log
 )

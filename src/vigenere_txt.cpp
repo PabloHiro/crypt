@@ -2,13 +2,14 @@
 
 std::string crypt::vigenere_txt::lock(const std::string &text, const std::string &password)
 {
-    LOG_ERR("VIGENERE_TXT. Text not locked\n");
+    //LOG_ERR("VIGENERE_TXT->LOCK: Text locked successfully\n");
+    LOG_ERR("VIGENERE_TXT->LOCK: Text not locked\n");
     return text;
 }
 
 std::string crypt::vigenere_txt::unlock(const std::string &text, const std::string &password)
 {
-    LOG_ERR("VIGENERE_TXT. Text not unlocked\n");
+    LOG_ERR("VIGENERE_TXT->UNLOCK: Text not unlocked\n");
     return text;
 }
 
@@ -85,10 +86,10 @@ std::string crypt::vigenere_txt::solve(const std::string &text, const std::strin
                 const int ans = static_cast<int>(answer[i] - 'A');
                 password += static_cast<char>( ((txt-ans >= 0)? (txt-ans) : (26+txt-ans)) + 'A');
             }
-            LOG_ERR("VIGENERE_TXT. The password is " << password << "\n");
+            LOG_ERR("VIGENERE_TXT->SOLVE: Text solved. The password is " << password << "\n");
             return answer;
         }
     }
-    LOG_ERR("VIGENERE_TXT. Text not solved\n");
+    LOG_ERR("VIGENERE_TXT->SOLVE: Text not solved\n");
     return text;
 }

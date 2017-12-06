@@ -2,13 +2,14 @@
 
 std::string crypt::affine::lock(const std::string &text, const std::string &password)
 {
-    LOG_ERR("AFFINE. Text not locked\n");
+    //LOG_ERR("AFFINE->LOCK: Text locked successfully\n");
+    LOG_ERR("AFFINE->LOCK: Text not locked\n");
     return text;
 }
 
 std::string crypt::affine::unlock(const std::string &text, const std::string &password)
 {
-    LOG_ERR("AFFINE. Text not unlocked\n");
+    LOG_ERR("AFFINE->UNLOCK: Text not unlocked\n");
     return text;
 }
 
@@ -75,10 +76,10 @@ std::string crypt::affine::solve(const std::string &text, const std::string &key
                 }
                 answer.push_back( static_cast<char>(K) + 'A');
             }
-            LOG_ERR("AFFINE. The password is a = " << a << ", b = " << b << "\n");
+            LOG_ERR("AFFINE->SOLVE: Text solved. The password is a = " << a << ", b = " << b << "\n");
             return answer;
         }
     }
-    LOG_ERR("AFFINE. Text not solved\n");
+    LOG_ERR("AFFINE->SOLVE: Text not solved\n");
     return text;
 }

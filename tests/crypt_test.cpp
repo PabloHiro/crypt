@@ -28,6 +28,10 @@ crypt::base_crypt* factory(const std::string crypt_class)
         return new crypt::transposition;
     }
     
+    if(crypt_class == "portabellaso")
+    {
+        return new crypt::portabellaso;
+    }
     return nullptr;
 }
 
@@ -48,6 +52,7 @@ int main ( int argc, char **argv )
         return 1;
     }
     
+    std::cerr << "crypt_class is: " << crypt_class << std::endl;
     std::cerr << "clear_text is: " << clear_text << std::endl;
     std::cerr << "password is: " << password << std::endl;
     std::cerr << "encrypted_text is: " << encrypted_text << std::endl;

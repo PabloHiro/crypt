@@ -2,7 +2,8 @@
 
 std::string crypt::transposition::lock(const std::string &text, const std::string &password)
 {
-    LOG_ERR("TRANSPOSITION. Text not locked\n");
+    //LOG_ERR("TRANSPOSITION->LOCK: Text locked successfully\n");
+    LOG_ERR("TRANSPOSITION->LOCK: Text not locked\n");
     return text;
 }
 
@@ -69,7 +70,7 @@ std::string crypt::transposition::unlock(const std::string &text, const std::str
         }
         return answer;
     }
-    LOG_ERR("TRANSPOSITION. Text not unlocked\n");
+    LOG_ERR("TRANSPOSITION->UNLOCK: Text not unlocked\n");
     return text;
 }
 
@@ -91,13 +92,13 @@ std::string crypt::transposition::solve(const std::string &text, const std::stri
                 answer = this->unlock( text, password );
                 if ( answer.find( keyword ) != std::string::npos )
                 {
-                    LOG_ERR("TRANSPOSITION. The password is: " << password << "\n");
+                    LOG_ERR("TRANSPOSITION->SOLVE: Text solved. The password is: " << password << "\n");
                     return answer;
                 }
             } while( std::next_permutation(password.begin(), password.end()) );
         }
     }
-    LOG_ERR("TRANSPOSITION. Text not solved\n");
+    LOG_ERR("TRANSPOSITION->SOLVE: Text not solved\n");
     return text;
 }
 

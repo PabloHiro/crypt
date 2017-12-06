@@ -14,9 +14,10 @@ std::string crypt::caesar::lock(const std::string &text, const std::string &pass
             curr %= 26;
             answer[i] = 'A' + static_cast<char>(curr);
         }
+        LOG_ERR("CAESAR->LOCK: Text locked successfully\n");
        return answer;
     }
-    LOG_ERR("CAESAR. Text not locked\n");
+    LOG_ERR("CAESAR->LOCK: Text not locked\n");
     return text;
 }
 
@@ -36,7 +37,7 @@ std::string crypt::caesar::unlock(const std::string &text, const std::string &pa
         }
        return answer;
     }
-    LOG_ERR("CAESAR. Text not unlocked\n");
+    LOG_ERR("CAESAR->UNLOCK: Text not unlocked\n");
     return text;
 }
 
@@ -57,11 +58,11 @@ std::string crypt::caesar::solve(const std::string &text, const std::string &key
             
             if ( answer.find ( keyword ) != std::string::npos )
             {
-               LOG_ERR("CAESAR. The password is "<< static_cast<char>(c + 'A') << "\n");
+               LOG_ERR("CAESAR->SOLVE: Text solved. The password is "<< static_cast<char>(c + 'A') << "\n");
                return answer;
             }
         }
     }
-    LOG_ERR("CAESAR. Text not solved\n");
+    LOG_ERR("CAESAR->SOLVE: Text not solved\n");
     return text;
 }
