@@ -20,27 +20,21 @@ target_compile_options(crypt_test PRIVATE -std=c++11 -Wall -static-libgcc -stati
    # ${CMAKE_CURRENT_SOURCE_DIR}/data $<TARGET_FILE_DIR:crypt_test>)
 
 #Call tests with make test
-add_test(
-    NAME caesar
-    COMMAND crypt_test caesar.xml 2>> crypt.log
-)
-add_test(
-    NAME affine
-    COMMAND crypt_test affine.xml 2>> crypt.log
-)
-add_test(
-    NAME portabellaso
-    COMMAND crypt_test portabellaso.xml 2>> crypt.log
-)
-add_test(
-    NAME vigenere_txt
-    COMMAND crypt_test vigenere_txt.xml 2>> crypt.log
-)
-add_test(
-    NAME transposition1
-    COMMAND crypt_test transposition1.xml 2>> crypt.log
-)
-add_test(
-    NAME transposition2
-    COMMAND crypt_test transposition2.xml 2>> crypt.log
-)
+
+set(TESING_REGEX "function lock doesn't work properly: ")
+add_test( caesar crypt_test caesar.xml)
+set_tests_properties( caesar PROPERTIES FAIL_REGULAR_EXPRESSION ${TESING_REGEX})
+
+add_test( affine crypt_test affine.xml)
+set_tests_properties( affine PROPERTIES FAIL_REGULAR_EXPRESSION  ${TESING_REGEX})
+
+add_test( portabellaso crypt_test portabellaso.xml)
+set_tests_properties( portabellaso PROPERTIES FAIL_REGULAR_EXPRESSION  ${TESING_REGEX})
+add_test( vigenere_txt crypt_test vigenere_txt.xml)
+set_tests_properties( vigenere_txt PROPERTIES FAIL_REGULAR_EXPRESSION  ${TESING_REGEX})
+
+add_test( transposition1 crypt_test transposition1.xml)
+set_tests_properties( transposition1 PROPERTIES FAIL_REGULAR_EXPRESSION  ${TESING_REGEX})
+
+add_test( transposition2 crypt_test transposition2.xml)
+set_tests_properties( transposition2 PROPERTIES FAIL_REGULAR_EXPRESSION  ${TESING_REGEX})

@@ -18,7 +18,6 @@
 
 std::string crypt::portabellaso::lock(const std::string &text, const std::string &password)
 {
-    //LOG_ERR("PORTABELLASO->LOCK: Text locked successfully\n");
     LOG_ERR("PORTABELLASO->LOCK: Text not locked\n");
     return text;
 }

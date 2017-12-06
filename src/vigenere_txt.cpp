@@ -2,7 +2,6 @@
 
 std::string crypt::vigenere_txt::lock(const std::string &text, const std::string &password)
 {
-    //LOG_ERR("VIGENERE_TXT->LOCK: Text locked successfully\n");
     LOG_ERR("VIGENERE_TXT->LOCK: Text not locked\n");
     return text;
 }

@@ -2,6 +2,7 @@
 #define AFFINE_CRYPT_23NOI3NO34NTIO3NTOI3
 
 #include <string>
+#include <exception>
 
 #include "base_crypt.hpp"
 
@@ -17,6 +18,9 @@ namespace crypt
         
         std::string solve   (const std::string &text, const std::string &keyword)  override;
         
+        private:
+        
+        bool valid_password (const std::string password, int &a, int &b);
     };
 }
 

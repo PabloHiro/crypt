@@ -3,6 +3,7 @@
 #include <fstream>
 
 #include "config.h"
+#include "../include/logging/logging.hpp"
 
 int get_data(const std::string file_name, std::string &crypt_class, std::string &clear_text, std::string &password, std::string &encrypted_text, std::string &keyword)
 {
@@ -10,7 +11,7 @@ int get_data(const std::string file_name, std::string &crypt_class, std::string 
     std::ifstream file ( (ABSOLUTE_CODE_PATH + file_name), std::ifstream::in);
     if( !file.is_open() )
     {
-        std::cerr << "Couldn't open file " << file_name << std::endl;
+        LOG_ERR("Couldn't open file " << file_name << "\n");
         return 1;
     }
     char c;
@@ -23,7 +24,6 @@ int get_data(const std::string file_name, std::string &crypt_class, std::string 
         (file >> std::ws).get(c);
         switch(state)
         {
-            std::cerr << c;
             case STATE_T::OUTSIDE_LABEL:
             {
                 if( c == '<' )
@@ -73,7 +73,7 @@ int get_data(const std::string file_name, std::string &crypt_class, std::string 
                 {
                     if( label_end != ('/' + label_start) )
                     {
-                        std::cerr << "Badly formated xml document in label " << label_start << std::endl;
+                        LOG_ERR("Badly formated xml document in label " << label_start << "\n");
                         return 2;
                     }
                     else
@@ -98,7 +98,7 @@ int get_data(const std::string file_name, std::string &crypt_class, std::string 
                         {
                             keyword = label_content;
                         }
-                        std::cerr << "Match with " << label_start << std::endl;
+                        LOG_ERR("Match with " << label_start << "\n");
                     }
                     state = STATE_T::OUTSIDE_LABEL;
                     break;

@@ -2,7 +2,6 @@
 
 std::string crypt::transposition::lock(const std::string &text, const std::string &password)
 {
-    //LOG_ERR("TRANSPOSITION->LOCK: Text locked successfully\n");
     LOG_ERR("TRANSPOSITION->LOCK: Text not locked\n");
     return text;
 }

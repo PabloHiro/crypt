@@ -14,7 +14,6 @@ std::string crypt::caesar::lock(const std::string &text, const std::string &pass
             curr %= 26;
             answer[i] = 'A' + static_cast<char>(curr);
         }
-        LOG_ERR("CAESAR->LOCK: Text locked successfully\n");
        return answer;
     }
     LOG_ERR("CAESAR->LOCK: Text not locked\n");
