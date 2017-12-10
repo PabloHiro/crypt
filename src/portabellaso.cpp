@@ -18,12 +18,40 @@
 
 std::string crypt::portabellaso::lock(const std::string &text, const std::string &password)
 {
+    if( valid(text) && valid(password) && min_size(password, 3) && min_size(text, 3) )
+    {
+        std::string answer;
+        answer.resize(text.size());
+        for ( size_t i = 0; i < text.size(); ++i )
+        {
+            const int txt = static_cast<int>(text[i] - 'A');
+            const int pwd = static_cast<int>(password[i%password.size()] - 'A');
+            const int dist = (13 - (13 + pwd/2)%13);
+            answer[i] = substitution(txt, dist);
+        }
+        LOG_ERR("AFFINE->LOCK: Text locked\n");
+        return answer;
+    }
     LOG_ERR("PORTABELLASO->LOCK: Text not locked\n");
     return text;
 }
 
 std::string crypt::portabellaso::unlock(const std::string &text, const std::string &password)
 {
+    if( valid(text) && valid(password) && min_size(password, 3) && min_size(text, 3) )
+    {
+        std::string answer;
+        answer.resize(text.size());
+        for ( size_t i = 0; i < text.size(); ++i )
+        {
+            const int txt = static_cast<int>(text[i] - 'A');
+            const int pwd = static_cast<int>(password[i%password.size()] - 'A');
+            const int dist = (13 - (13 + pwd/2)%13);
+            answer[i] = substitution(txt, dist);
+        }
+        LOG_ERR("AFFINE->UNLOCK: Text unlocked\n");
+        return answer;
+    }
     LOG_ERR("PORTABELLASO->UNLOCK: Text not unlocked\n");
     return text;
 }
@@ -82,8 +110,8 @@ std::string crypt::portabellaso::solve(const std::string &text, const std::strin
             {
                 const int txt = static_cast<int>(text[index+i] - 'A');
                 const int key = static_cast<int>(keyword[i] - 'A');
-                const int distance = ( (txt-key) > 0 ? (txt-key) : (key-txt) );
-                password.push_back(distance%13);
+                const int distance = ( (txt-key) > 0 ? (txt-key) : (key-txt) )%13;
+                password.push_back(distance);
                 //std::cerr << static_cast<char>(password[i]+'A') << ' ' << password[i] << ' ' << text[index+i] << '-' << keyword[i] << std::endl;
             }
             
@@ -113,6 +141,7 @@ std::string crypt::portabellaso::solve(const std::string &text, const std::strin
             }
             const int txt = static_cast<int>(text[0] - 'A');
             answer[0] = substitution(txt, password[password.size()-index%password.size()]);
+            
             std::string readable_password;
             readable_password.resize(password.size());
             for( size_t i = 0; i < password.size(); ++i )

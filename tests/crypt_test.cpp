@@ -72,20 +72,20 @@ int main ( int argc, char **argv )
     if( curr_encr != encrypted_text )
     {
         std::cout << "function lock doesn't work properly: " << std::endl;
-        std::cout << "\t output: " << curr_encr << std::endl;
-        std::cout << "\t expected output: " << encrypted_text <<std::endl;
+        std::cout << "\t output:\t\t" << curr_encr << std::endl;
+        std::cout << "\t expected output:\t" << encrypted_text <<std::endl;
     }
     if( curr_clr1 != clear_text )
     {
         std::cout << "function unlock doesn't work properly: " << std::endl;
-        std::cout << "\t output: " << curr_clr1 << std::endl;
-        std::cout << "\t expected output: " << clear_text << std::endl;
+        std::cout << "\t output:\t\t" << curr_clr1 << std::endl;
+        std::cout << "\t expected output:\t" << clear_text << std::endl;
     }
     if( curr_clr2 != clear_text )
     {
         std::cout << "function solve doesn't work properly: " << std::endl;
-        std::cout << "\t output: " << curr_clr2 << std::endl;
-        std::cout << "\t expected output: " << clear_text << std::endl;
+        std::cout << "\t output:\t\t" << curr_clr2 << std::endl;
+        std::cout << "\t expected output:\t" << clear_text << std::endl;
     }
     return 0;
 }

@@ -2,12 +2,56 @@
 
 std::string crypt::vigenere_txt::lock(const std::string &text, const std::string &password)
 {
+    if( valid(text) && valid(password) && min_size(password, 3) && min_size(text, 3) )
+    {
+        std::string answer;
+        answer.resize(text.size());
+        size_t pwd_size = password.size();
+        for ( size_t i = 0; i < pwd_size; ++i )
+        {
+            const int txt = static_cast<int>(text[i] - 'A');
+            const int pwd = static_cast<int>(password[i] - 'A');
+            answer[i] = static_cast<char>( (txt+pwd)%26 + 'A');
+        }
+        
+        for ( size_t i = pwd_size; i < text.size(); ++i )
+        {
+            const int txt = static_cast<int>(text[i] - 'A');
+            const int pwd = static_cast<int>(text[i-pwd_size] - 'A');
+            answer[i] = static_cast<char>( (txt+pwd)%26 + 'A');
+        }
+        
+        LOG_ERR("VIGENERE_TXT->LOCK: Text locked\n");
+        return answer;
+    }
     LOG_ERR("VIGENERE_TXT->LOCK: Text not locked\n");
     return text;
 }
 
 std::string crypt::vigenere_txt::unlock(const std::string &text, const std::string &password)
 {
+    if( valid(text) && valid(password) && min_size(password, 3) && min_size(text, 3) )
+    {
+        std::string answer;
+        answer.resize(text.size());
+        size_t pwd_size = password.size();
+        for ( size_t i = 0; i < pwd_size; ++i )
+        {
+            const int txt = static_cast<int>(text[i] - 'A');
+            const int pwd = static_cast<int>(password[i] - 'A');
+            answer[i] = static_cast<char>( ((txt-pwd >= 0)? (txt-pwd) : (26+txt-pwd)) + 'A');
+        }
+        
+        for ( size_t i = pwd_size; i < text.size(); ++i )
+        {
+            const int txt = static_cast<int>(text[i] - 'A');
+            const int pwd = static_cast<int>(answer[i-pwd_size] - 'A');
+            answer[i] = static_cast<char>( ((txt-pwd >= 0)? (txt-pwd) : (26+txt-pwd)) + 'A');
+        }
+        
+        LOG_ERR("VIGENERE_TXT->UNLOCK: Text locked\n");
+        return answer;
+    }
     LOG_ERR("VIGENERE_TXT->UNLOCK: Text not unlocked\n");
     return text;
 }
