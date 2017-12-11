@@ -23,6 +23,8 @@ namespace crypt
         
         size_t get_pos( const std::vector<unsigned> &col_order , const unsigned col );
         
+        std::vector<unsigned> order_of_columns( const std::string &password );
+        
     };
 }
 

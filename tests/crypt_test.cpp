@@ -18,6 +18,11 @@ crypt::base_crypt* factory(const std::string crypt_class)
         return new crypt::affine;
     }
     
+    if(crypt_class == "portabellaso")
+    {
+        return new crypt::portabellaso;
+    }
+    
     if(crypt_class == "vigenere_txt")
     {
         return new crypt::vigenere_txt;
@@ -26,11 +31,6 @@ crypt::base_crypt* factory(const std::string crypt_class)
     if(crypt_class == "transposition")
     {
         return new crypt::transposition;
-    }
-    
-    if(crypt_class == "portabellaso")
-    {
-        return new crypt::portabellaso;
     }
     return nullptr;
 }
