@@ -44,53 +44,36 @@ std::string crypt::transposition::unlock(const std::string &text, const std::str
     {
         // In this case the input is the password of the text, not a keyword contained in the text
         // We assume that the password doesnt have repeated letters
+        std::string answer;
+        answer.resize(text.size());
+        
         // First, we find the order of the columns
         std::vector<unsigned> col_order = order_of_columns(password);
-        
-        // Now we divide the text in n substrings, where n is the size of the text divided by the size of the password
-        std::vector<std::string> columns;
-        
         size_t pwd_size = password.size();
-        size_t column_size = 1 + (text.size()/pwd_size);
+        size_t max_column_size = 1 + (text.size()/pwd_size);
+        size_t curr_column_size;
         
         //Number of columns larger than the rest. These will be the first columns once the text is ordered
         unsigned larger_columns = text.size()%pwd_size;
-        size_t total_size = 0;
-        for( size_t i = 0; i < pwd_size; ++i )
-        {
-            size_t curr_size;
-            if( get_pos( col_order, i ) >= larger_columns ) //This column will be shorter
-            {
-                curr_size = column_size - 1;
-            }
-            else
-            {
-                curr_size = column_size;
-            }
-            
-            std::string sub_text( (text.begin() + total_size) , (text.begin() + total_size + curr_size) );
-            columns.push_back(sub_text);
-            total_size += curr_size;
-        }
+        size_t curr_index = 0;
         
-        // Once we have all the columns stored, we have to print them in the correct order
-        std::string answer;
-        answer.resize(text.size());
         for( size_t i = 0; i < pwd_size; ++i )
         {
             for( size_t j = 0; j < pwd_size; ++j )
             {
-                if( col_order[i] == j )
+                if( col_order[j] == i)
                 {
-                    for( size_t k = 0; k < columns[j].size(); ++k )
+                    curr_column_size = (j >= larger_columns)? max_column_size - 1 : max_column_size;
+                    for( size_t k = 0; k < curr_column_size; ++k )
                     {
-                        answer[k*pwd_size+i] = columns[j][k];
+                        answer[k*pwd_size+j] = text[curr_index+k];
                     }
+                    curr_index += curr_column_size;
                     break;
                 }
             }
         }
-        //LOG_ERR("TRANSPOSITION->UNLOCK: Text unlocked\n");
+        LOG_ERR("TRANSPOSITION->UNLOCK: Text unlocked\n");
         return answer;
     }
     LOG_ERR("TRANSPOSITION->UNLOCK: Text not unlocked\n");
@@ -112,7 +95,7 @@ std::string crypt::transposition::solve(const std::string &text, const std::stri
                 password.push_back('A' + i);
             }
             do {
-                answer = this->unlock( text, password );
+                answer = quick_unlock( text, password );
                 if ( answer.find( keyword ) != std::string::npos )
                 {
                     LOG_ERR("TRANSPOSITION->SOLVE: Text solved. The password is: " << password << "\n");
@@ -123,6 +106,36 @@ std::string crypt::transposition::solve(const std::string &text, const std::stri
     }
     LOG_ERR("TRANSPOSITION->SOLVE: Text not solved\n");
     return text;
+}
+
+std::string crypt::transposition::quick_unlock (const std::string &text, const std::string &password)
+{
+    std::string answer;
+    answer.resize(text.size());
+    std::vector<unsigned> col_order = order_of_columns(password);
+    size_t pwd_size = password.size();
+    size_t max_column_size = 1 + (text.size()/pwd_size);
+    size_t curr_column_size;
+    unsigned larger_columns = text.size()%pwd_size;
+    size_t curr_index = 0;
+
+    for( size_t i = 0; i < pwd_size; ++i )
+    {
+        for( size_t j = 0; j < pwd_size; ++j )
+        {
+            if( col_order[j] == i)
+            {
+                curr_column_size = (j >= larger_columns)? max_column_size - 1 : max_column_size;
+                for( size_t k = 0; k < curr_column_size; ++k )
+                {
+                    answer[k*pwd_size+j] = text[curr_index+k];
+                }
+                curr_index += curr_column_size;
+                break;
+            }
+        }
+    }
+    return answer;
 }
 
 size_t crypt::transposition::get_pos( const std::vector<unsigned> &col_order , const unsigned col )

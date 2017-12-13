@@ -21,6 +21,8 @@ namespace crypt
         
         private:
         
+        std::string quick_unlock (const std::string &text, const std::string &password);
+        
         size_t get_pos( const std::vector<unsigned> &col_order , const unsigned col );
         
         std::vector<unsigned> order_of_columns( const std::string &password );
